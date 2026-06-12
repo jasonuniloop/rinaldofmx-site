@@ -27,6 +27,8 @@ if (menuToggle && nav) {
 
 if (reserveLink && reserveCross) {
   document.addEventListener("mousemove", (event) => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
     const box = reserveLink.getBoundingClientRect();
     const centerX = box.left + box.width / 2;
     const centerY = box.top + box.height / 2;
