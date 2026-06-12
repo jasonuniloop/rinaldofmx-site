@@ -8,6 +8,9 @@
       name="description"
       content="David Rinaldo, champion international de FMX. Shows freestyle motocross, performances et booking evenementiel."
     >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" href="Sources/Logos/favicon.png">
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -23,11 +26,16 @@
       <nav class="site-nav" id="site-nav" data-nav>
         <a href="#about">Qui est David ?</a>
         <a href="#show">Le show</a>
-        <a href="#gallery">Les photos</a>
-        <a class="reserve-link" href="#booking">Reserver</a>
-        <a href="#contact">Contact</a>
+        <a href="#booking">Les formules</a>
+        <a class="reserve-link" href="#contact" data-reserve-link>
+          Reserver
+          <svg class="reserve-cross" viewBox="0 0 94 42" aria-hidden="true" focusable="false">
+            <path d="M10 9 C29 19 52 26 84 35" />
+            <path d="M12 34 C35 23 57 15 82 7" />
+          </svg>
+        </a>
+        <a class="shop-link" href="#gallery">Le shop</a>
       </nav>
-      <a class="header-cta" href="#contact">Contact</a>
     </header>
 
     <main>

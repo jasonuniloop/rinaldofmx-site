@@ -7,6 +7,8 @@ const lightboxImg = document.querySelector("[data-lightbox-img]");
 const lightboxClose = document.querySelector("[data-lightbox-close]");
 const lightboxPrev = document.querySelector("[data-lightbox-prev]");
 const lightboxNext = document.querySelector("[data-lightbox-next]");
+const reserveLink = document.querySelector("[data-reserve-link]");
+const reserveCross = reserveLink?.querySelector(".reserve-cross");
 let currentImageIndex = 0;
 
 if (menuToggle && nav) {
@@ -20,6 +22,24 @@ if (menuToggle && nav) {
       nav.classList.remove("is-open");
       menuToggle.setAttribute("aria-expanded", "false");
     }
+  });
+}
+
+if (reserveLink && reserveCross) {
+  document.addEventListener("mousemove", (event) => {
+    const box = reserveLink.getBoundingClientRect();
+    const centerX = box.left + box.width / 2;
+    const centerY = box.top + box.height / 2;
+    const moveX = Math.max(-9, Math.min(9, (event.clientX - centerX) / 22));
+    const moveY = Math.max(-5, Math.min(5, (event.clientY - centerY) / 32));
+
+    reserveCross.style.setProperty("--mx", `${moveX}px`);
+    reserveCross.style.setProperty("--my", `${moveY}px`);
+  });
+
+  reserveLink.addEventListener("mouseleave", () => {
+    reserveCross.style.setProperty("--mx", "0px");
+    reserveCross.style.setProperty("--my", "0px");
   });
 }
 
