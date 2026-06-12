@@ -1,0 +1,19 @@
+local-server.*.log
+.netlify/
+__MACOSX/
+*/__MACOSX/
+
+# Working/source files not needed for the live static site.
+Sources/*.mov
+Sources/*.pdf
+Sources/*.psd
+Sources/*.jpeg
+Sources/*.jpg
+!Sources/texture.jpg
+Sources/*.png
+Sources/photos MX Mag/
+IMG ok/photo retouché/
+IMG ok/image*.jpeg
+IMG ok/photo-david-rinaldo.jpg
+Fonts/webfonts_Stussy-Script-Regular/
+Vidéo/0303.mp4
