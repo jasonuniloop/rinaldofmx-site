@@ -9,6 +9,7 @@ const lightboxPrev = document.querySelector("[data-lightbox-prev]");
 const lightboxNext = document.querySelector("[data-lightbox-next]");
 const reserveLink = document.querySelector("[data-reserve-link]");
 const reserveCross = reserveLink?.querySelector(".reserve-cross");
+const counters = [...document.querySelectorAll("[data-count-to]")];
 let currentImageIndex = 0;
 
 if (menuToggle && nav) {
@@ -85,3 +86,35 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") showImage(currentImageIndex - 1);
   if (event.key === "ArrowRight") showImage(currentImageIndex + 1);
 });
+
+function animateCounter(counter) {
+  const target = Number(counter.dataset.countTo || 0);
+  const duration = 1250;
+  const start = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    counter.textContent = String(Math.round(target * eased));
+
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+if (counters.length) {
+  const counterObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.55 }
+  );
+
+  counters.forEach((counter) => counterObserver.observe(counter));
+}
