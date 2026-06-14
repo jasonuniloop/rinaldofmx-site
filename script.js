@@ -1,7 +1,11 @@
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const nav = document.querySelector("[data-nav]");
 const galleryButtons = [...document.querySelectorAll(".gallery button")];
+const gallery = document.querySelector(".gallery");
 const galleryImages = galleryButtons.map((button) => button.querySelector("img")).filter(Boolean);
+const galleryPrev = document.querySelector("[data-gallery-prev]");
+const galleryNext = document.querySelector("[data-gallery-next]");
+const galleryProgress = document.querySelector("[data-gallery-progress]");
 const lightbox = document.querySelector("[data-lightbox]");
 const lightboxImg = document.querySelector("[data-lightbox-img]");
 const lightboxClose = document.querySelector("[data-lightbox-close]");
@@ -44,6 +48,64 @@ if (reserveLink && reserveCross) {
     reserveCross.style.setProperty("--mx", "0px");
     reserveCross.style.setProperty("--my", "0px");
   });
+}
+
+if (gallery) {
+  let isDraggingGallery = false;
+  let galleryDragStartX = 0;
+  let galleryStartScroll = 0;
+
+  function updateGalleryProgress() {
+    if (!galleryProgress) return;
+
+    const maxScroll = gallery.scrollWidth - gallery.clientWidth;
+    const progress = maxScroll > 0 ? gallery.scrollLeft / maxScroll : 0;
+    galleryProgress.style.setProperty("--gallery-progress", String(Math.max(0.08, progress)));
+  }
+
+  gallery.addEventListener(
+    "wheel",
+    (event) => {
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+
+      event.preventDefault();
+      gallery.scrollLeft += event.deltaY;
+    },
+    { passive: false }
+  );
+
+  gallery.addEventListener("scroll", updateGalleryProgress, { passive: true });
+
+  gallery.addEventListener("pointerdown", (event) => {
+    isDraggingGallery = true;
+    galleryDragStartX = event.clientX;
+    galleryStartScroll = gallery.scrollLeft;
+    gallery.setPointerCapture(event.pointerId);
+  });
+
+  gallery.addEventListener("pointermove", (event) => {
+    if (!isDraggingGallery) return;
+
+    gallery.scrollLeft = galleryStartScroll - (event.clientX - galleryDragStartX);
+  });
+
+  gallery.addEventListener("pointerup", () => {
+    isDraggingGallery = false;
+  });
+
+  gallery.addEventListener("pointercancel", () => {
+    isDraggingGallery = false;
+  });
+
+  galleryPrev?.addEventListener("click", () => {
+    gallery.scrollBy({ left: -gallery.clientWidth * 0.82, behavior: "smooth" });
+  });
+
+  galleryNext?.addEventListener("click", () => {
+    gallery.scrollBy({ left: gallery.clientWidth * 0.82, behavior: "smooth" });
+  });
+
+  updateGalleryProgress();
 }
 
 function showImage(index) {
