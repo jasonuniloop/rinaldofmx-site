@@ -17,6 +17,30 @@ let currentImageIndex = 0;
 let currentShowIndex = 0;
 
 if (siteLoader) {
+  const loaderLogo = siteLoader.querySelector("img");
+
+  Object.assign(siteLoader.style, {
+    position: "fixed",
+    inset: "0",
+    zIndex: "9999",
+    display: "grid",
+    placeItems: "center",
+    background: "#fff",
+    pointerEvents: "none",
+    opacity: "1",
+    visibility: "visible",
+    transition: "opacity 720ms cubic-bezier(0.22, 1, 0.36, 1), visibility 720ms",
+  });
+
+  if (loaderLogo) {
+    Object.assign(loaderLogo.style, {
+      width: "min(180px, 52vw)",
+      maxWidth: "min(180px, 52vw)",
+      height: "auto",
+      display: "block",
+    });
+  }
+
   document.body.classList.add("is-loading");
 
   function hideSiteLoader() {
@@ -24,6 +48,8 @@ if (siteLoader) {
 
     window.setTimeout(() => {
       siteLoader.classList.add("is-hiding");
+      siteLoader.style.opacity = "0";
+      siteLoader.style.visibility = "hidden";
       document.body.classList.remove("is-loading");
       window.setTimeout(() => siteLoader.remove(), 820);
     }, delay);

@@ -68,7 +68,8 @@ body {
 }
 
 .site-loader img {
-  width: clamp(128px, 16vw, 245px);
+  width: min(180px, 52vw);
+  height: auto;
   opacity: 0;
   transform: translateY(18px) scale(0.86);
   animation: loaderLogoIn 1150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
